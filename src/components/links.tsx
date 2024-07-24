@@ -1,9 +1,9 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import LinkContainer from './linkcontainer';
-import { linksContext } from '@/app/dashboard/page'; 
+import { linksContext } from '@/app/contexts/linkcontext';
 
 export default function Links() {
     const [allLinks, setAllLinks] = useContext(linksContext);
@@ -12,7 +12,7 @@ export default function Links() {
         if (allLinks.length < 5) {
             setAllLinks([
                 ...allLinks,
-                { iconName: '', iconUrl: '', backgroundColor: '', iconLink: '' }
+                { iconName: 'GitHub', iconUrl: '/social_icons/github.svg', backgroundColor: '#1A1A1A', iconLink: '' }
             ]);
         }
     };
@@ -45,7 +45,7 @@ export default function Links() {
                     :
                     allLinks.map((userLink, index) => {
                         return (
-                            <LinkContainer key={index} index={index} allLinks={allLinks} setAllLinks={setAllLinks} />
+                            <LinkContainer key={index} indexLink={index} allLinks={allLinks} setAllLinks={setAllLinks} />
                         )
                     })
                 }

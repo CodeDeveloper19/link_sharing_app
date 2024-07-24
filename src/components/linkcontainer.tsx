@@ -3,13 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useState } from 'react';
 import DropDownOption from './dropdownoption';
-import { AllLinksProps } from '../app/dashboard/page';
-
-interface LinkContainerProps {
-    index: number;
-    allLinks: AllLinksProps[];
-    setAllLinks: React.Dispatch<React.SetStateAction<AllLinksProps[]>>;
-}
+import { LinkContainerProps } from '@/app/contexts/linkcontext';
 
 interface DropDownOptionsProps {
     iconUrl: string;
@@ -47,7 +41,7 @@ const dropDownOptions : DropDownOptionsProps[] = [
     },
 ]
 
-export default function LinkContainer({ index, allLinks, setAllLinks }: LinkContainerProps) {
+export default function LinkContainer({ indexLink, allLinks, setAllLinks }: LinkContainerProps) {
     const [showDropDown, setShowDropDown] = useState(false);
     const [counter, setCounter] = useState(0);
 
@@ -67,17 +61,20 @@ export default function LinkContainer({ index, allLinks, setAllLinks }: LinkCont
                     <div className='relative w-[12px] h-[6px]'>
                         <Image fill src='/dashboard/double.svg' alt='double horizontal lines in vector'/>
                     </div>
-                    <h2 className='font-[700] text-[16px] leading-[24px] text-[#737373]'>{`Link #${index + 1}`}</h2>
+                    <h2 className='font-[700] text-[16px] leading-[24px] text-[#737373]'>{`Link #${indexLink + 1}`}</h2>
                 </div>
                 <button className='text-[#737373] text-[16px] font-[400] leading-[24px]'>Remove</button>
             </div>
             <div className='w-full gap-[4px] flex flex-col'>
                 <h3 className='text-[12px] leading-[18px] font-[400] text-[#333333] text-left'>Platform</h3>
                 <button onClick={changeDropDown} className='w-full relative h-[48px] border-[1px] border-[#D9D9D9] rounded-[8px] px-[16px] flex items-center gap-[12px] hover:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] hover:border-[#633CFF]'>
-                    <div className='w-[16px] h-[16px] relative'>
-                        <Image fill src='/social_icons/github_dark.svg' alt='social icon'/>
-                    </div>
-                    <p className='flex-1 text-left font-[400] text-[16px] leading-[24px] text-[#333333]'>GitHub</p>
+                    <span
+                    style={{
+                        maskImage: `url('${allLinks[indexLink].iconUrl === '/social_icons/frontendmentor.svg' ? 'social_icons/frontendmentor_dark.svg' : allLinks[indexLink].iconUrl}')`,
+                    }}
+                    className='w-[16px] h-[16px] bg-[#737373]'
+                    ></span>
+                    <p className='flex-1 text-left font-[400] text-[16px] leading-[24px] text-[#333333]'>{allLinks[indexLink].iconName}</p>
                     <div className='w-[12px] h-[6px] relative'>
                         <Image fill src={`${(showDropDown) ? '/dashboard/arrow_up.svg' : '/dashboard/arrow_down.svg'}`} className='object-cover' alt='arrow pointing icon'/>
                     </div>
@@ -90,7 +87,11 @@ export default function LinkContainer({ index, allLinks, setAllLinks }: LinkCont
                                         isBottom={index !== dropDownOptions.length - 1} 
                                         iconUrl={dropDownOption.iconUrl}
                                         iconName={dropDownOption.iconName} 
-                                        key={index} />
+                                        key={index}
+                                        indexLink={indexLink}
+                                        allLinks={allLinks}
+                                        setAllLinks={setAllLinks}
+                                        />
                                     )
                                 })
                             }

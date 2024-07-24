@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useContext } from 'react';
-import { linksContext } from '@/app/dashboard/page';
+import { linksContext } from '@/app/contexts/linkcontext';
 import LinkBox from './linkbox';
 
 export default function PhoneProfileDetails() {
@@ -21,7 +21,15 @@ export default function PhoneProfileDetails() {
             <div className='w-full gap-[20px] flex flex-col'>
                 {
                     allLinks.map((link, index) => (
-                        <LinkBox key={index} height='44px' />
+                        <LinkBox
+                        key={index}
+                        height='44px'
+                        textHeight='12px'
+                        backgroundColor={link.backgroundColor}
+                        iconLink={link.iconLink}
+                        iconName={link.iconName}
+                        iconUrl={link.iconUrl} 
+                         />
                     ))
                 }
             </div>

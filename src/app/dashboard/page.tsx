@@ -1,23 +1,13 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import { useState, createContext } from 'react';
+import { useState } from 'react';
 import Links from '@/components/links';
 import ProfileDetails from '@/components/profileDetails';
 import Link from 'next/link';
 import LinksProfileDetails from '@/components/linksprofiledetails';
 import PhoneProfileDetails from '@/components/phoneprofiledetails';
-
-export interface AllLinksProps {
-    iconUrl: string;
-    iconName: string;
-    backgroundColor: string;
-    iconLink: string;
-}
-
-type LinksContextType = [AllLinksProps[], React.Dispatch<React.SetStateAction<AllLinksProps[]>>];
-
-export const linksContext = createContext<LinksContextType>([[], () => {}]);
+import { AllLinksProps, linksContext } from '../contexts/linkcontext';
 
 export default function DashBoard() {
     const [hoverUrl, setHoverUrl] = useState('/dashboard/user.svg');

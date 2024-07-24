@@ -1,18 +1,19 @@
 import React from 'react';
 import Image from 'next/image';
+import { AllLinksProps } from '@/app/contexts/linkcontext';
 
-interface LinkBoxProps {
+interface LinkBoxProps extends AllLinksProps {
     height: string;
+    textHeight: string;
 }
 
-export default function LinkBox({ height }: LinkBoxProps) {
+export default function LinkBox({ height, textHeight, backgroundColor, iconName, iconUrl }: LinkBoxProps) {
   return (
-    //44px 56px
-    <a target="_blank" rel="noopener noreferrer" href='' style={{height, backgroundColor: '#1A1A1A'}} className='w-full gap-[8px] rounded-[8px] flex flex-row items-center justify-between px-[16px] hover:opacity-[.6]'>
+    <a target="_blank" rel="noopener noreferrer" href='' style={{height, backgroundColor: backgroundColor}} className='w-full gap-[8px] rounded-[8px] flex flex-row items-center justify-between px-[16px] hover:opacity-[.6]'>
         <div className='w-[16px] h-[16px] relative'>
-            <Image fill src='/social_icons/github.svg' alt='social icon'/>
+            <Image fill src={iconUrl} alt='social icon'/>
         </div>
-        <p className='flex-1 text-left font-[400] text-[16px] leading-[24px] text-white'>GitHub</p>
+        <p style={{fontSize: textHeight}} className='flex-1 text-left font-[400] leading-[24px] text-white'>{iconName}</p>
         <div className='w-[16px] h-[16px] relative'>
             <Image fill src='/dashboard/arrow_right.svg' alt='arrow pointing right icon'/>
         </div>

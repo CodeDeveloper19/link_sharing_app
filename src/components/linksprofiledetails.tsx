@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { linksContext } from '@/app/dashboard/page';
+import { linksContext } from '@/app/contexts/linkcontext';
 import LinkBox from './linkbox';
 
 export default function LinksProfileDetails() {
@@ -11,7 +11,15 @@ export default function LinksProfileDetails() {
             <div className='w-full gap-[20px] flex flex-col relative top-[214px]'>
                 {
                     allLinks.map((link, index) => (
-                        <LinkBox key={index} height='44px' />
+                        <LinkBox 
+                        key={index} 
+                        height='44px'
+                        textHeight='12px'
+                        backgroundColor={link.backgroundColor}
+                        iconLink={link.iconLink}
+                        iconName={link.iconName}
+                        iconUrl={link.iconUrl} 
+                        />
                     ))
                 }
             </div>
