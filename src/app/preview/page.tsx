@@ -7,7 +7,7 @@ export default function Preview() {
   return (
     <>
         <header className='w-full p-0 phone:p-[24px] gap-[8px] z-10 bg-white phone:bg-transparent'>
-            <div className='w-full py-[16px] pr-[16px] pl-[24px] gap-[8px] rounded-none phone:rounded-[12px] bg-white'>
+            <div className='w-full py-[16px] pr-[16px] pl-[24px] gap-[8px] rounded-t-none phone:rounded-t-[12px] rounded-b-[12px] bg-white'>
                 <div className='w-full flex flex-row justify-between'>
                     <Link href='/dashboard' className='hover:bg-[#EFEBFF] border-[1px] border-[#633CFF] w-[159px] h-[46px] flex items-center justify-center gap-[8px] rounded-[8px] text-[16px] leading-[24px] font-[600] text-[#633CFF]'>
                         Back to Editor

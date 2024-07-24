@@ -4,7 +4,7 @@ import IsNoImage from './no_image';
 
 export default function ProfileDetails() {
   return (
-        <div className='p-[16px] phone:p-[40px] flex flex-col gap-[40px]'>
+        <div className='p-[24px] phone:p-[40px] flex flex-col gap-[40px]'>
             <div className='flex flex-col gap-[8px]'>
                 <h1 className='font-[700] text-[32px] leading-[48px] text-[#333333]'>Profile Details</h1>
                 <p className='font-[400] text-[16px] leading-[24px] text-[#737373]'>Add your details to create a personal touch to your profile.</p>
