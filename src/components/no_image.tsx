@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function IsNoImage() {
   return (
-    <button className='rounded-[12px] w-[193px] h-[193px] bg-transparent relative flex items-center justify-center'>
+    <button className='rounded-[12px] w-[193px] h-[193px] bg-transparent relative flex items-center justify-center flex-shrink-0'>
         <div className='opacity-[.50] bg-[black] z-10 absolute w-full h-full rounded-[12px]'></div>
         <div className='absolute w-full h-full z-0'>
             <Image fill src='' className='object-cover rounded-[12px]' alt="user's image"/>

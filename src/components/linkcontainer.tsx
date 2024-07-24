@@ -107,6 +107,7 @@ export default function LinkContainer({ indexLink, allLinks, setAllLinks }: Link
                     </div>
                     <input
                         placeholder="e.g. alex@email.com"
+                        required
                         className="outline-none h-[24px] w-full text-[16px] font-[400] leading-[24px] bg-transparent text-[#333] focus:caret-[#633CFF]"
                     />
                 </div>

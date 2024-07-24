@@ -18,7 +18,7 @@ export default function Links() {
     };
 
     return (
-        <div className='p-[40px] flex flex-col gap-[40px]'>
+        <div className='p-[16px] phone:p-[40px] flex flex-col gap-[40px]'>
             <div className='flex flex-col gap-[8px]'>
                 <h1 className='font-[700] text-[32px] leading-[48px] text-[#333333]'>Customize your links</h1>
                 <p className='font-[400] text-[16px] leading-[24px] text-[#737373]'>Add/edit/remove links below and then share all your profiles with the world!</p>
@@ -32,7 +32,7 @@ export default function Links() {
                     (
                         <div className='rounded-[12px] p-[20px] w-full bg-[#FAFAFA] flex gap-[12px] items-center min-h-[469px]'>
                             <div className='flex flex-col gap-[40px] w-full items-center'>
-                                <div className='relative w-[250px] h-[160px]'>
+                                <div className='relative w-[124.77px] smartPhone:w-[250px] h-[80px] smartPhone:h-[160px]'>
                                     <Image fill src='/dashboard/user_tapping.svg' alt='illustration of a user tapping'/>
                                 </div>
                                 <div className='flex flex-col gap-[24px] max-w-[488px]'>
