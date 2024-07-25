@@ -107,7 +107,7 @@ export default function Preview() {
                     <div className='flex flex-col gap-[56px] w-full'>
                         <div className='w-full gap-[25px] flex flex-col items-center'>
                             <div className='relative rounded-full w-[104px] h-[104px] border-[4px] border-[#633CFF]'>
-                                <Image fill src={imageURL || '/default_image.png'} className='object-cover rounded-full' alt='image of user'/>
+                                <Image unoptimized fill src={imageURL || '/default_image.png'} className='object-cover rounded-full' alt='image of user'/>
                             </div>
                             <div className='flex flex-col max-w-[173px] gap-[8px] text-center'>
                                 <h1 className='font-[700] text-[32px] leading-[48px] text-[#333333]'>{firstName} {lastName}</h1>
