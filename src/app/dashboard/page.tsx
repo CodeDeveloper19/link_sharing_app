@@ -13,6 +13,7 @@ import { auth } from '../../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { ProfileContext } from '../contexts/profilecontext';
+import { signOut } from 'firebase/auth';
 
 export default function DashBoard() {
     const [hoverUrl, setHoverUrl] = useState('/dashboard/user.svg');
@@ -149,6 +150,18 @@ export default function DashBoard() {
         }
     };
 
+    const logUserOut = async (event: React.FormEvent) => {
+        event.preventDefault();
+    
+        try {
+            await signOut(auth);
+            router.push('/');
+        } catch (error) {
+            setNotificationMessage('Error logging out. Please try again.');
+            setShowNotification(true);
+        }
+    }
+
     return (
         <>
             <header className="w-full p-0 phone:p-[24px] bg-white phone:bg-transparent">
@@ -239,6 +252,11 @@ export default function DashBoard() {
                             <div style={{display: (allLinks.length > 0) || (email !== '' && firstName !== '' && lastName !== '') ? 'none': 'block'}} className='bg-transparent rounded-[8px] z-10 w-full phone:w-[91px] h-[46px] absolute'></div>
                             <button type='submit' style={{opacity: (allLinks.length > 0) || (email !== '' && firstName !== '' && lastName !== '') ? '1' : '0.25'}} className='active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] rounded-[8px] text-[white] text-[16px] leading-[24px] font-[600] hover:bg-[#BEADFF] bg-[#633CFF] w-full phone:w-[91px] h-[46px]'>
                                 Save
+                            </button>
+                        </div>
+                        <div className='px-[16px] phone:px-[40px] flex items-center justify-end'>
+                            <button onClick={logUserOut} type='button'className='active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] rounded-[8px] text-[white] text-[16px] leading-[24px] font-[600] hover:opacity-[.7] w-full phone:w-[91px] h-[46px] bg-[#FF3939]'>
+                                Logout
                             </button>
                         </div>
                     </form>

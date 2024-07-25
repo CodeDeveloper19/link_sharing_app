@@ -91,7 +91,7 @@ export default function Preview() {
         <>
             <header className='w-full p-0 phone:p-[24px] gap-[8px] z-10 bg-white phone:bg-transparent'>
                 <div className='w-full py-[16px] pr-[16px] pl-[24px] gap-[8px] rounded-t-none phone:rounded-t-[12px] rounded-b-[12px] bg-white'>
-                    <div className='w-full flex flex-row justify-between'>
+                    <div className='w-full flex flex-col microPhone:flex-row justify-between gap-[20px] microPhone:gap-0'>
                         <Link href='/dashboard' className='hover:bg-[#EFEBFF] border-[1px] border-[#633CFF] w-[159px] h-[46px] flex items-center justify-center gap-[8px] rounded-[8px] text-[16px] leading-[24px] font-[600] text-[#633CFF]'>
                             Back to Editor
                         </Link>
@@ -109,12 +109,12 @@ export default function Preview() {
                             <div className='relative rounded-full w-[104px] h-[104px] border-[4px] border-[#633CFF]'>
                                 <Image unoptimized fill src={imageURL || '/default_image.png'} className='object-cover rounded-full' alt='image of user'/>
                             </div>
-                            <div className='flex flex-col max-w-[173px] gap-[8px] text-center'>
+                            <div className='flex flex-col gap-[8px] text-center'>
                                 <h1 className='font-[700] text-[32px] leading-[48px] text-[#333333]'>{firstName} {lastName}</h1>
                                 <p className='font-[400] text-[16px] leading-[24px] text-[#737373]'>{email}</p>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-[20px] w-[237px]'>
+                        <div className='flex flex-col gap-[20px] w-full phone:w-[237px]'>
                             {
                                 allLinks.map((link, index) => (
                                     <LinkBox

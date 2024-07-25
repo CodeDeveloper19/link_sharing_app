@@ -38,12 +38,12 @@ const ViewUser = () => {
                             <div className='relative rounded-full w-[104px] h-[104px] border-[4px] border-[#633CFF]'>
                                 <Image unoptimized fill src={userData.imageURL || '/default_image.png'} className='object-cover rounded-full' alt='User image'/>
                             </div>
-                            <div className='flex flex-col max-w-[173px] gap-[8px] text-center'>
+                            <div className='flex flex-col gap-[8px] text-center'>
                                 <h1 className='font-[700] text-[32px] leading-[48px] text-[#333333]'>{userData.firstName} {userData.lastName}</h1>
                                 <p className='font-[400] text-[16px] leading-[24px] text-[#737373]'>{userData.email}</p>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-[20px] w-[237px]'>
+                        <div className='flex flex-col gap-[20px] w-full phone:w-[237px]'>
                             {userData.links.map((link: any, index: number) => (
                                 <LinkBox
                                     key={index}
