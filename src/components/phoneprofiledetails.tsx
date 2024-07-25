@@ -18,10 +18,10 @@ export default function PhoneProfileDetails() {
                         <Image fill unoptimized src={imageURL ?? '/default_image.png'} className='rounded-full object-cover' alt='image of user'/>
                     </div>
                     <div className='flex flex-col max-w-[123px] gap-[8px] text-center'>
-                        <h2 className={`${imageURL === '' ? 'hidden' : 'block'} font-[600] text-[18px] leading-[27px] text-[#333333]`}>
+                        <h2 className={`${imageURL === '' ? 'hidden' : 'block'} font-[600] text-[18px] leading-[27px] text-[#333333] overflow-hidden whitespace-nowrap text-ellipsis`}>
                             {`${firstName} ${lastName}`}
                         </h2>
-                        <p className={`${imageURL === '' ? 'hidden' : 'block'} font-[400] text-[14px] leading-[21px] text-[#737373]`}>
+                        <p className={`${imageURL === '' ? 'hidden' : 'block'} font-[400] text-[14px] leading-[21px] text-[#737373] overflow-hidden whitespace-nowrap text-ellipsis`}>
                             {email}
                         </p>
                     </div>
