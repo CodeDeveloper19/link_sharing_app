@@ -60,7 +60,7 @@ export default function DashBoard() {
                 setFirstName(data.firstName || '');
                 setLastName(data.lastName || '');
                 setEmail(data.email || '');
-                setImageURL(data.imageURL || null);
+                setImageURL(data.profileImage || null);
             } 
         } catch (error) {
             console.error('Error fetching user data:', error);

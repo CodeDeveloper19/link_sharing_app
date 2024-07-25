@@ -16,7 +16,6 @@ export default function Preview() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [imageURL, setImageURL] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | null>(null); // Track the userId
     const router = useRouter();
 
     useEffect(() => {
@@ -24,7 +23,6 @@ export default function Preview() {
             if (!user) {
                 router.push('/'); 
             } else {
-                setUserId(user.uid); // Save userId
                 fetchUserData(user.uid);
             }
         });
@@ -53,7 +51,7 @@ export default function Preview() {
                 setFirstName(data.firstName || '');
                 setLastName(data.lastName || '');
                 setEmail(data.email || '');
-                setImageURL(data.imageURL || null);
+                setImageURL(data.profileImage || null);
             } else {
                 console.error('No such document!');
             }
@@ -62,15 +60,24 @@ export default function Preview() {
         }
     };
 
-    const copyToClipboard = async () => {
-        if (!userId) return;
-
-        // Generate the link to copy
-        const baseUrl = 'https://localhost:3000/preview';
-        const linkToCopy = `${baseUrl}?userId=${userId}`;
-
+    const copyToClipBoard = async () => {
+        // Create the base URL for the 'viewuser' path
+        const baseUrl = new URL('/viewuser', window.location.origin);
+        
+        // Create query parameters
+        const queryParams = new URLSearchParams({
+            firstName,
+            lastName,
+            email,
+            imageURL: imageURL ?? '',
+            links: JSON.stringify(allLinks)
+        });
+    
+        // Append query parameters to the base URL
+        baseUrl.search = queryParams.toString();
+    
         try {
-            await navigator.clipboard.writeText(linkToCopy);
+            await navigator.clipboard.writeText(baseUrl.toString());
             setNotificationMessage("The link has been copied to your clipboard!");
             setShowNotification(true);
         } catch (err) {
@@ -78,7 +85,8 @@ export default function Preview() {
             setShowNotification(true);
         }
     };
-
+    
+    
     return (
         <>
             <header className='w-full p-0 phone:p-[24px] gap-[8px] z-10 bg-white phone:bg-transparent'>
@@ -87,7 +95,7 @@ export default function Preview() {
                         <Link href='/dashboard' className='hover:bg-[#EFEBFF] border-[1px] border-[#633CFF] w-[159px] h-[46px] flex items-center justify-center gap-[8px] rounded-[8px] text-[16px] leading-[24px] font-[600] text-[#633CFF]'>
                             Back to Editor
                         </Link>
-                        <button onClick={copyToClipboard} className='active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] rounded-[8px] text-[white] text-[16px] leading-[24px] font-[600] hover:bg-[#BEADFF] bg-[#633CFF] w-[159px] phone:w-[133px] h-[46px]'>
+                        <button onClick={copyToClipBoard} className='active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] rounded-[8px] text-[white] text-[16px] leading-[24px] font-[600] hover:bg-[#BEADFF] bg-[#633CFF] w-[159px] phone:w-[133px] h-[46px]'>
                             Share Link
                         </button>
                     </div>
@@ -99,7 +107,7 @@ export default function Preview() {
                     <div className='flex flex-col gap-[56px] w-full'>
                         <div className='w-full gap-[25px] flex flex-col items-center'>
                             <div className='relative rounded-full w-[104px] h-[104px] border-[4px] border-[#633CFF]'>
-                                <Image fill src={imageURL || '/dashboard/testing.jpg'} className='object-cover rounded-full' alt='image of user'/>
+                                <Image fill src={imageURL || '/default_image.png'} className='object-cover rounded-full' alt='image of user'/>
                             </div>
                             <div className='flex flex-col max-w-[173px] gap-[8px] text-center'>
                                 <h1 className='font-[700] text-[32px] leading-[48px] text-[#333333]'>{firstName} {lastName}</h1>
