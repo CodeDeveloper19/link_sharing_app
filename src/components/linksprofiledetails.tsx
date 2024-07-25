@@ -4,7 +4,7 @@ import { linksContext } from '@/app/contexts/linkcontext';
 import LinkBox from './linkbox';
 
 export default function LinksProfileDetails() {
-    const [allLinks] = useContext(linksContext);
+    const {allLinks} = useContext(linksContext);
 
     return (
         <div className='relative w-[237px] h-[514px] flex flex-col gap-[56px] top-[5px]'>

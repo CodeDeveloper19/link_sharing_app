@@ -13,6 +13,29 @@ export interface LinkContainerProps {
     setAllLinks: React.Dispatch<React.SetStateAction<AllLinksProps[]>>;
 }
 
-type LinksContextType = [AllLinksProps[], React.Dispatch<React.SetStateAction<AllLinksProps[]>>];
+type LinksContextType = {
+    allLinks: AllLinksProps[];
+    setAllLinks: React.Dispatch<React.SetStateAction<AllLinksProps[]>>;
+    firstName: string;
+    setFirstName: React.Dispatch<React.SetStateAction<string>>;
+    lastName: string;
+    setLastName: React.Dispatch<React.SetStateAction<string>>;
+    email: string;
+    setEmail: React.Dispatch<React.SetStateAction<string>>;
+    imageURL: string | null;
+    setImageURL: React.Dispatch<React.SetStateAction<string | null>>;
+};
 
-export const linksContext = createContext<LinksContextType>([[], () => {}]);
+export const linksContext = createContext<LinksContextType>({
+    allLinks: [],
+    setAllLinks: () => {},
+    firstName: '',
+    setFirstName: () => {},
+    lastName: '',
+    setLastName: () => {},
+    email: '',
+    setEmail: () => {},
+    imageURL: null,
+    setImageURL: () => {}
+});
+

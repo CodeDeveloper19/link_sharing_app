@@ -11,7 +11,7 @@ import PhoneProfileDetails from '@/components/phoneprofiledetails';
 import { AllLinksProps, linksContext } from '../contexts/linkcontext';
 import { auth } from '../../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { ProfileContext } from '../contexts/profilecontext';
 
 export default function DashBoard() {
@@ -31,6 +31,8 @@ export default function DashBoard() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (!user) {
                 router.push('/');
+            } else {
+                fetchUserData(user.uid);
             }
         });
 
@@ -46,6 +48,24 @@ export default function DashBoard() {
             return () => clearTimeout(timer);
         }
     }, [showNotification]);
+
+    const fetchUserData = async (userId: string) => {
+        const db = getFirestore();
+        const userDocRef = doc(db, 'users', userId);
+        try {
+            const userDoc = await getDoc(userDocRef);
+            if (userDoc.exists()) {
+                const data = userDoc.data();
+                setAllLinks(data.links || []);
+                setFirstName(data.firstName || '');
+                setLastName(data.lastName || '');
+                setEmail(data.email || '');
+                setImageURL(data.imageURL || null);
+            } 
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
 
     const isValidURL = (url: string) => {
         try {
@@ -186,11 +206,11 @@ export default function DashBoard() {
                             <Image fill src='/dashboard/phone.svg' alt='illustration of a phone'/>
                             {
                                 currenPage === 'profile' ? (
-                                    <linksContext.Provider value={[allLinks, setAllLinks]}>
+                                    <linksContext.Provider value={{ allLinks, setAllLinks, firstName, setFirstName, lastName, setLastName, email, setEmail, imageURL, setImageURL }}>
                                         <PhoneProfileDetails />
                                     </linksContext.Provider>
                                 ) : (
-                                    <linksContext.Provider value={[allLinks, setAllLinks]}>
+                                    <linksContext.Provider value={{ allLinks, setAllLinks, firstName, setFirstName, lastName, setLastName, email, setEmail, imageURL, setImageURL }}>
                                         <LinksProfileDetails />
                                     </linksContext.Provider>
                                 )
@@ -207,7 +227,7 @@ export default function DashBoard() {
                     }} className='flex-grow rounded-[12px] bg-white flex flex-col'>
                         {
                             currenPage === 'links' ?
-                            <linksContext.Provider value={[allLinks, setAllLinks]}>
+                            <linksContext.Provider value={{ allLinks, setAllLinks, firstName, setFirstName, lastName, setLastName, email, setEmail, imageURL, setImageURL }}>
                                 <Links />
                             </linksContext.Provider>
                             : 

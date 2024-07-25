@@ -6,7 +6,7 @@ import LinkContainer from './linkcontainer';
 import { linksContext } from '@/app/contexts/linkcontext';
 
 export default function Links() {
-    const [allLinks, setAllLinks] = useContext(linksContext);
+    const {allLinks, setAllLinks} = useContext(linksContext);
 
     const addLink = () => {
         if (allLinks.length < 5) {
