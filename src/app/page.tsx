@@ -54,7 +54,7 @@ export default function Home() {
             <div className="flex flex-col gap-[4px]">
               <label className="text-[12px] leading-[18px] font-[400] text-[#333]">Email address</label>
               <div className={`${errorEmail ? '!border-[#FF3939]' : 'border-[#D9D9D9]'} flex flex-row items-center py-[12px] px-[16px] gap-[12px] rounded-[8px] border-[1px] focus-within:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] focus-within:border-[#633CFF]`}>
-                <div className="w-[16px] h-[16px] relative">
+                <div className="w-[16px] h-[16px] flex-shrink-0 relative">
                   <Image fill src='/login/mail.svg' alt="vector of a mail"/>
                 </div>
                 <input
@@ -62,21 +62,18 @@ export default function Home() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. alex@email.com"
                   required
-                  className="outline-none h-[24px] bg-transparent flex-1 text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
+                  className="outline-none w-full h-[24px] bg-transparent text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
                 />
                 {
-                  (errorEmail)
-                  ? 
-                  (<p className="text-[#FF3939] text-[12px] leading-[18px] text-right font-[400]">Please check again</p>)
-                  :
-                  null
+                  errorEmail &&
+                  <p className="smartPhone:block hidden text-[#FF3939] text-[12px] leading-[18px] text-right font-[400] flex-shrink-0 min-w-fit">Please check again</p>
                 }
               </div>
             </div>
             <div className="flex flex-col gap-[4px]">
               <label className="text-[12px] leading-[18px] font-[400] text-[#333]">Password</label>
               <div className={`${errorPassword ? '!border-[#FF3939]' : 'border-[#D9D9D9]'} flex flex-row items-center py-[12px] px-[16px] gap-[12px] rounded-[8px] border-[1px] focus-within:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] focus-within:border-[#633CFF]`}>
-                <div className="w-[16px] h-[16px] relative">
+                <div className="w-[16px] h-[16px] relative flex-shrink-0">
                   <Image fill src='/login/lock.svg' alt="vector of a lock"/>
                 </div>
                 <input
@@ -85,15 +82,16 @@ export default function Home() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Enter your password"
-                  className="outline-none h-[24px] flex-1 text-[16px] bg-transparent font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
+                  className="outline-none h-[24px] w-full text-[16px] bg-transparent font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
                 />
                 {
                   (errorPassword)
                   ? 
-                  (<p className="text-[#FF3939] text-[12px] leading-[18px] text-right font-[400]">Please check again</p>)
+                  (<p className="smartPhone:block hidden text-[#FF3939] flex-shrink-0 text-[12px] leading-[18px] text-right font-[400] min-w-fit">Please check again</p>)
                   :
                   null
-                }              </div>
+                }              
+              </div>
             </div>
             <button type="submit" className="hover:bg-[#BEADFF] active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] px-[27px] py-[11px] rounded-[8px] flex justify-center items-center w-full bg-[#633CFF] text-[16px] font-[600] leading-[24px] text-[#FFF]">Login</button>
             <p className="text-[16px] w-full text-center font-[400] leading-[24px] text-[#737373]">Don&apos;t have an account? <Link href='/signup' className="text-[#633CFF] hover:text-[#BEADFF]">Create account</Link></p>

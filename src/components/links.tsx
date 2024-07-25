@@ -24,7 +24,7 @@ export default function Links() {
                 <p className='font-[400] text-[16px] leading-[24px] text-[#737373]'>Add/edit/remove links below and then share all your profiles with the world!</p>
             </div>
             <div className='flex flex-col gap-[24px]'>
-                <button onClick={addLink} className='w-full border-[1px] hover:bg-[#EFEBFF] border-[#633CFF] h-[46px] rounded-[8px] text-[16px] leading-[24px] text-[#633CFF] font-[600]'>
+                <button type='button' onClick={addLink} className='w-full border-[1px] hover:bg-[#EFEBFF] border-[#633CFF] h-[46px] rounded-[8px] text-[16px] leading-[24px] text-[#633CFF] font-[600]'>
                 + Add new link
                 </button>
                 {

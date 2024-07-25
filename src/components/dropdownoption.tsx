@@ -45,7 +45,7 @@ export default function DropDownOption({ iconUrl, iconName, isBottom, indexLink,
     
     return (
       <>
-          <button onClick={setLink} className='w-full flex flex-row gap-[12px] items-center group'>
+          <button type='button' onClick={setLink} className='w-full flex flex-row gap-[12px] items-center group'>
               <span style={{maskImage: `url('${iconUrl}')`}} className='w-[16px] h-[16px] group-hover:bg-[#633CFF] bg-[#737373]'>
               </span>
               <p className='flex-1 text-left font-[400] text-[16px] leading-[24px] text-[#333333] group-hover:text-[#633CFF]'>{iconName}</p>

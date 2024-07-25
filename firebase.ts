@@ -27,4 +27,4 @@ if (typeof window !== "undefined") {
   });
 }
 
-export { auth, db, analytics };
+export { app, auth, db, analytics };

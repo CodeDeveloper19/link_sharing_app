@@ -1,23 +1,133 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Links from '@/components/links';
 import ProfileDetails from '@/components/profileDetails';
 import Link from 'next/link';
 import LinksProfileDetails from '@/components/linksprofiledetails';
 import PhoneProfileDetails from '@/components/phoneprofiledetails';
 import { AllLinksProps, linksContext } from '../contexts/linkcontext';
+import { auth } from '../../../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { ProfileContext } from '../contexts/profilecontext';
 
 export default function DashBoard() {
     const [hoverUrl, setHoverUrl] = useState('/dashboard/user.svg');
     const [hoverLinkUrl, setHoverLinkUrl] = useState('/dashboard/link_onhover.svg');
     const [currenPage, setCurrentPage] = useState('links');
+    const [showNotification, setShowNotification] = useState(false);
+    const [notificationMessage, setNotificationMessage] = useState('');
     const [allLinks, setAllLinks] = useState<AllLinksProps[]>([]);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [imageURL, setImageURL] = useState<string | null>(null);
+    const router = useRouter();
 
-    const saveToDatabase = (event: React.FormEvent) => {
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                router.push('/');
+            }
+        });
+
+        return () => unsubscribe();
+    }, [router]);
+
+    useEffect(() => {
+        if (showNotification) {
+            const timer = setTimeout(() => {
+                setShowNotification(false);
+            }, 3000); 
+
+            return () => clearTimeout(timer);
+        }
+    }, [showNotification]);
+
+    const isValidURL = (url: string) => {
+        try {
+            new URL(url);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    };
+
+    const saveLinksToDatabase = async (event: React.FormEvent) => {
         event.preventDefault();
-      }
+    
+        const allLinksValid = allLinks.every(link => {
+            const isNotEmpty = link.iconLink.trim() !== '';
+            const isValid = isValidURL(link.iconLink);
+            return isNotEmpty && isValid;
+        });
+    
+        if (allLinksValid) {
+            const user = auth.currentUser;
+    
+            if (user) {
+                const userId = user.uid; // User ID from Firebase Authentication
+                const db = getFirestore();
+    
+                try {
+                    // Reference the user's document in the 'links' collection (or another suitable collection)
+                    const userLinksDocRef = doc(db, 'users', userId);
+    
+                    // Create or update the document with the links data
+                    await setDoc(userLinksDocRef, {
+                        links: allLinks
+                    }, { merge: true });
+    
+                    setNotificationMessage('Your changes have been successfully saved!');
+                    setShowNotification(true);
+                } catch (error) {
+                    setNotificationMessage('Error saving links. Please try again.');
+                    setShowNotification(true);
+                }
+            } else {
+                setNotificationMessage('User not authenticated. Please log in.');
+                setShowNotification(true);
+            }
+        } else {
+            setNotificationMessage('You provided one or more invalid links');
+            setShowNotification(true);
+        }
+    };
+
+    const saveProfileToDatabase = async (event: React.FormEvent) => {
+        event.preventDefault();
+    
+        const user = auth.currentUser;
+    
+        if (user) {
+            const userId = user.uid; // User ID from Firebase Authentication
+            const db = getFirestore();
+    
+            try {
+                // Reference the user's document in the 'users' collection
+                const userDocRef = doc(db, 'users', userId);
+    
+                // Create or update the document with the profile data
+                await setDoc(userDocRef, {
+                    firstName,
+                    lastName,
+                    email
+                }, { merge: true }); // Use merge: true to update existing fields or create the document if it doesn't exist
+    
+                setNotificationMessage('Your changes have been successfully saved!');
+                setShowNotification(true);
+            } catch (error) {
+                setNotificationMessage('Error updating profile. Please try again.');
+                setShowNotification(true);
+            }
+        } else {
+            setNotificationMessage('User not authenticated. Please log in.');
+            setShowNotification(true);
+        }
+    };
 
     return (
         <>
@@ -87,25 +197,41 @@ export default function DashBoard() {
                             }
                         </div>
                     </section>
-                    <form onSubmit={saveToDatabase} className='flex-grow rounded-[12px] bg-white flex flex-col'>
+                    <form onSubmit={(event) => {
+                        event.preventDefault();
+                        if (currenPage === 'links') {
+                            saveLinksToDatabase(event);
+                        } else if (currenPage === 'profile') {
+                            saveProfileToDatabase(event);
+                        }
+                    }} className='flex-grow rounded-[12px] bg-white flex flex-col'>
                         {
                             currenPage === 'links' ?
                             <linksContext.Provider value={[allLinks, setAllLinks]}>
                                 <Links />
                             </linksContext.Provider>
                             : 
-                            <ProfileDetails />
+                            <ProfileContext.Provider value={{ firstName, setFirstName, lastName, setLastName, email, setEmail, imageURL, setImageURL }}>
+                                <ProfileDetails />
+                            </ProfileContext.Provider>
                         }
                         <div className='relative border-t-[1px] border-[#D9D9D9] px-[16px] phone:px-[40px] flex items-center justify-end py-[24px] w-full'>
-                            <div style={{display: (allLinks.length > 0) ? 'none': 'block'}} className='bg-transparent rounded-[8px] z-10 w-full phone:w-[91px] h-[46px] absolute'></div>
-                            <button type='submit' style={{opacity: (allLinks.length > 0) ? '1' : '0.25'}} className='active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] rounded-[8px] text-[white] text-[16px] leading-[24px] font-[600] hover:bg-[#BEADFF] bg-[#633CFF] w-full phone:w-[91px] h-[46px]'>
+                            <div style={{display: (allLinks.length > 0) || (email !== '' && firstName !== '' && lastName !== '') ? 'none': 'block'}} className='bg-transparent rounded-[8px] z-10 w-full phone:w-[91px] h-[46px] absolute'></div>
+                            <button type='submit' style={{opacity: (allLinks.length > 0) || (email !== '' && firstName !== '' && lastName !== '') ? '1' : '0.25'}} className='active:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] rounded-[8px] text-[white] text-[16px] leading-[24px] font-[600] hover:bg-[#BEADFF] bg-[#633CFF] w-full phone:w-[91px] h-[46px]'>
                                 Save
                             </button>
                         </div>
                     </form>
                 </div>
             </main>
+            <section style={{display: showNotification ? 'flex' : 'none'}} className='fixed w-full h-full z-30 flex items-end justify-center pb-[40px] px-[20px]'> 
+                <div className='max-w-[406px] min-h-[56px] bg-[#333333] flex flex-row rounded-[12px] gap-[8px] py-[16px] px-[24px] shadow-[0px_0px_32px_0px_rgba(0,0,0,0.1)]'>
+                    <div className='relative w-[20px] h-[20px] flex-shrink-0'>
+                        <Image fill src='/dashboard/disk.svg' alt='vector of a floppy disk'/>
+                    </div>
+                    <p className='font-[600] text-[16px] leading-[24px] text-[#FAFAFA] text-center'>{notificationMessage}</p>
+                </div>
+            </section>
         </>
     );
 }
-

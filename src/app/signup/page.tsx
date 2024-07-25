@@ -82,7 +82,7 @@ export default function SignupPage() {
             <div className="flex flex-col gap-[4px]">
               <label className="text-[12px] leading-[18px] font-[400] text-[#333]">Email address</label>
               <div className={`${errorEmail ? '!border-[#FF3939]' : 'border-[#D9D9D9]'} flex flex-row items-center py-[12px] px-[16px] gap-[12px] rounded-[8px] border-[1px] focus-within:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] focus-within:border-[#633CFF]`}>
-                <div className="w-[16px] h-[16px] relative">
+                <div className="w-[16px] h-[16px] relative flex-shrink-0">
                   <Image fill src='/login/mail.svg' alt="vector of a mail"/>
                 </div>
                 <input
@@ -90,16 +90,16 @@ export default function SignupPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="e.g. alex@email.com"
                   required
-                  className="outline-none h-[24px] bg-transparent flex-1 text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
+                  className="outline-none h-[24px] bg-transparent w-full text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
                 />
-                {errorEmail && <p className="text-[#FF3939] text-[12px] leading-[18px]">Invalid email address</p>}
-                {errorEmailExists && <p className="text-[#FF3939] text-[12px] leading-[18px]">Already Exists</p>}
+                {errorEmail && <p className="smartPhone:block hidden text-[#FF3939] text-[12px] leading-[18px] min-w-fit">Invalid email address</p>}
+                {errorEmailExists && <p className="smartPhone:block hidden text-[#FF3939] text-[12px] leading-[18px] min-w-fit">Already Exists</p>}
               </div>
             </div>
             <div className="flex flex-col gap-[4px]">
               <label className="text-[12px] leading-[18px] font-[400] text-[#333]">Create Password</label>
               <div className={`${errorPassword || errorPasswordLength ? '!border-[#FF3939]' : 'border-[#D9D9D9]'} flex flex-row items-center py-[12px] px-[16px] gap-[12px] rounded-[8px] border-[1px] focus-within:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] focus-within:border-[#633CFF]`}>
-                <div className="w-[16px] h-[16px] relative">
+                <div className="w-[16px] h-[16px] relative flex-shrink-0">
                   <Image fill src='/login/lock.svg' alt="vector of a lock"/>
                 </div>
                 <input
@@ -108,15 +108,15 @@ export default function SignupPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 8 characters"
                   required
-                  className="outline-none bg-transparent h-[24px] flex-1 text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
+                  className="outline-none bg-transparent h-[24px] w-full text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
                 />
-                {errorPassword && <p className="text-[#FF3939] text-[12px] leading-[18px]">Weak Password</p>}
+                {errorPassword && <p className="smartPhone:block hidden text-[#FF3939] flex-shrink-0 text-[12px] leading-[18px] min-w-fit">Weak Password</p>}
               </div>
             </div>
             <div className="flex flex-col gap-[4px]">
               <label className="text-[12px] leading-[18px] font-[400] text-[#333]">Confirm password</label>
               <div className={`${errorConfirmPassword ? '!border-[#FF3939]' : 'border-[#D9D9D9]'} flex flex-row items-center py-[12px] px-[16px] gap-[12px] rounded-[8px] border-[1px] focus-within:shadow-[0_0_32px_0_rgba(99,60,255,0.25)] focus-within:border-[#633CFF]`}>
-                <div className="w-[16px] h-[16px] relative">
+                <div className="w-[16px] h-[16px] relative flex-shrink-0">
                   <Image fill src='/login/lock.svg' alt="vector of a lock"/>
                 </div>
                 <input
@@ -125,9 +125,9 @@ export default function SignupPage() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="At least 8 characters"
                   required
-                  className="outline-none bg-transparent h-[24px] flex-1 text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
+                  className="outline-none bg-transparent h-[24px] w-full text-[16px] font-[400] leading-[24px] text-[#333] focus:caret-[#633CFF]"
                 />
-                {errorConfirmPassword && <p className="text-[#FF3939] text-[12px] leading-[18px]">Doesn&apos;t match</p>}
+                {errorConfirmPassword && <p className="smartPhone:block hidden text-[#FF3939] flex-shrink-0 text-[12px] leading-[18px] min-w-fit">Doesn&apos;t match</p>}
               </div>
             </div>
             <p className={`${errorPasswordLength ? 'text-[#FF3939]' : 'text-[#737373]'} font-[400] text-[12px] leading-[18px]`}>Password must contain at least 8 characters</p>
