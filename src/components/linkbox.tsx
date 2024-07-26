@@ -7,9 +7,9 @@ interface LinkBoxProps extends AllLinksProps {
     textHeight: string;
 }
 
-export default function LinkBox({ height, textHeight, backgroundColor, iconName, iconUrl }: LinkBoxProps) {
+export default function LinkBox({ height, textHeight, backgroundColor, iconName, iconUrl, iconLink }: LinkBoxProps) {
   return (
-    <a target="_blank" rel="noopener noreferrer" href='' style={{height, backgroundColor: backgroundColor}} className='w-full gap-[8px] rounded-[8px] flex flex-row items-center justify-between px-[16px] hover:opacity-[.6]'>
+    <a target="_blank" rel="noopener noreferrer" href={iconLink} style={{height, backgroundColor: backgroundColor}} className='w-full gap-[8px] rounded-[8px] flex flex-row items-center justify-between px-[16px] hover:opacity-[.6]'>
         <div className='w-[16px] h-[16px] relative'>
             <Image fill src={iconUrl} alt='social icon'/>
         </div>
